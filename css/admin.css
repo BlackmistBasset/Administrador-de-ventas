@@ -1,37 +1,304 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap'); /* font-family: 'Quicksand', sans-serif; */
-@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap'); /* font-family: 'Gochi Hand', cursive; */
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -FUENTES- ‧ • 。⚝ * '- - - - - - - - - - - */
+
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap'); /* font-family: 'Patrick Hand', cursive; */
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap'); /* font-family: 'Neucha', cursive; */
 
 
-* {
+*, *::before, *::after {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Neucha', cursive;
     background-color: #0f1f35;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -CONTENEDORES PRINCIPALES- ‧ • 。⚝ * '- - - - - - - - - - - */
+
 .contenedor-supremo {
-    width: 90%;
+    width: 75%;
+    height: 600px;
+    margin: auto;
+    max-width: 1850px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .contenedor-superior {
-    width: 90%;
+    width: 100%;
+    max-width:1100px;
+    min-width: 950px;
+    height: 250px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
 
 .contenedor-inferior {
-    width: 90%;
+    width: 100%;
+    max-width: 1100px;
+    min-width: 950px;
+    height: 400px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -CONTENEDORES SECUNDARIOS- ‧ • 。⚝ * '- - - - - - - - - - - */
+
 .estadisticas-ventas {
-    background-color: #816f5c;
+    background-color: #ebecd8;
+    width: 50%;
+    height: 90%;
+    border: 2px solid #80d39b;
+    border-radius: 15px;
+    margin: 10px;
 }
 
 .estadisticas-reportes {
-    background-color: #816f5c;
+    background-color: #ebecd8;
+    width: 50%;
+    height: 90%;
+    border: 2px solid #80d39b;
+    border-radius: 15px;
+    margin: 10px;
 }
 
 .ventas {
+    background-color: #ebecd8;
+    width: 100%;
+    height: 90%;
+    border: 2px solid #80d39b;
+    border-radius: 15px;
+    margin: 10px; 
+    justify-content: space-between;
+}
+
+
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -ESTRUCTURA CONTENEDORES- ‧ • 。⚝ * '- - - - - - - - - - - */
+
+.encabezado {
+    width: 100%;
+    height: 50px;
     background-color: #816f5c;
+    border-radius: 15px 15px 0px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.titulo-encabezado {
+    font-size: 25px;
+    letter-spacing: 1.5px;
+    color: #80d39b;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.contenido {
+    height: 100%;
+    padding: 5px 0px 0px 10px; 
+}
+
+.enunciado-fijo {
+    font-size: 22px;
+    color: #0f3d7c;
+    font-family: 'Patrick Hand', cursive;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.ventas .encabezado {
+    justify-content: space-between;
+}
+
+.ventas .contenido, .estadisticas-ventas .contenido {
+    padding-left: 0px;
+}
+
+span {
+    font-weight: lighter;
+}
+
+
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -TABLAS- ‧ • 。⚝ * '- - - - - - - - - - - */
+
+table {
+    width: 95%;
+    margin: auto;
+    border-collapse: collapse;
+    color: #0f3d7c;
+}
+
+td {
+    border-bottom: 2px solid #816f5c;
+    height: 40px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+th {
+    text-align: left;
+    border-bottom: 3px solid #816f5c;
+    height: 50px;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.tabla-fecha, .tabla-precio {
+    width: 100px;
+}
+
+.tabla-vendedora, .tabla-sucursal  {
+    width: 120px;
+}
+
+.tabla-acciones {
+    width: 90px;
+}
+
+.iconos-edit {
+    text-align: center;
+}
+
+.fa-trash-alt {
+    font-size: 20px;
+    color: darkred;
+}
+
+.fa-edit {
+    font-size: 20px;
+    color: green;
+}
+
+
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -VENTANA MODAL- ‧ • 。⚝ * '- - - - - - - - - - - */
+
+.boton-general {
+    color: #ebecd8;
+    width: 110px;
+    height: 30px;
+    margin-right: 20px;
+    border-radius: 10px;
+    background-color: #09254b;
+    font-family: 'Patrick Hand', cursive;
+    border: 1px solid #80d39b;
+    font-size: 18px;
+}
+
+.boton-general:hover {
+    background-color: #0f3d7c;
+}
+
+.ocultar-modal {
+    display: none;
+}
+
+.contenedor-modal {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(10, 10, 46, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.ventana-modal-ventas {
+    width: 400px;
+    height: 550px;
+    background-color: #ebecd8;
+    border-radius: 15px;
+    border: 2px solid #80d39b;
+
+}
+
+
+/* - - - - - - - - - - -' * ⚝ 。• ‧ -FORMS MODAL- ‧ • 。⚝ * '- - - - - - - - - - - */
+
+.form-nueva-venta {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.single-select {
+    width: 96%;
+    margin: 10px auto;
+    height: 30px;
+    border: 2px solid #80d39b;
+    border-radius: 5px;
+    color: #0f3d7c;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 17px;
+    font-weight: bold;
+    outline: none;
+    background-color: #fefff5;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0f3d7c;
+}
+
+.select-componentes {
+    width: 96%;
+    height: 150px;
+    border: 2px solid #80d39b;
+    margin: 10px auto;
+    border-radius: 5px;
+    overflow: auto;
+    outline: none;
+}
+
+select[multiple]:focus option:checked {
+    background: #816f5c linear-gradient(0deg, #816f5c 0%, #816f5c);
+  }
+
+option {
+    height: 30px;
+    color: #0f3d7c;
+    font-size: 17px;
+    padding-top: 2px;
+    font-family: 'Patrick Hand', cursive;
+    background-color: #fefff5;
+    
+}
+
+option:focus {
+    background-color: #816f5c;
+    color: #ebecd8;
+}
+
+input[type=date] {
+    width: 96%;
+    border: 2px solid #80d39b;
+    margin: 10px auto;
+    border-radius: 5px;
+    outline: none;
+    font-family: 'Patrick Hand', cursive;
+    color: #0f3d7c;
+    font-size: 17px;
+}
+
+.contenedor-botones {
+    display: flex;
+    justify-content: flex-end;
 }
