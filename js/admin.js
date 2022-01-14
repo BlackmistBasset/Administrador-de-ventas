@@ -10,7 +10,6 @@ const cancelarNuevaVenta = document.getElementById('nueva-venta-cancelar');
 
 // ------------------------------ MODAL EDITAR VENTA ------------------------------
 const ventanaModalEditar = document.getElementById('ocultar-modal-editar-venta');
-const btnEditar = document.querySelector('.boton-editar');
 const listaVendedorasEdit = document.getElementById('vendedoras-edit');
 const listaComponentesEdit = document.getElementById('componentes-edit');
 const listaSucursalesEdit = document.getElementById('sucursales-edit');
@@ -19,7 +18,6 @@ const cancelarEditarVenta = document.getElementById('editar-venta-cancelar');
 
 // ------------------------------ MODAL ELIMINAR VENTA ------------------------------
 const ventanaModalEliminar = document.getElementById('ocultar-modal-eliminar-venta');
-const btnEliminar = document.querySelector('.boton-eliminar');
 const aceptarEliminarVenta = document.getElementById('eliminar-venta-aceptar');
 const cancelarEliminarVenta = document.getElementById('eliminar-venta-cancelar');
 
@@ -34,8 +32,42 @@ const sucursales = ["Centro", "Caballito"];
 
 // ------------------------------ L O G I C A ------------------------------
 
-// ------------------------------ Desplegables del form de la modal Nueva Venta ------------------------------
+// ------------------------------ Creación de tablas ------------------------------
 
+const sucursalesMasVentas = document.getElementById('tabla-estadisticas');
+
+const crearTablaEstdisticas = () => {
+    for (let sucursal of sucursales) {
+        const filaEstadisticaSucursal = document.createElement('tr');
+        sucursalesMasVentas.appendChild(filaEstadisticaSucursal);
+        filaEstadisticaSucursal.innerHTML = `<td>${sucursal}</td> <td>totalVentasSucursal</td>`;
+    }
+}
+crearTablaEstdisticas();
+
+//Dar formato a la fecha
+const format = (date, locale, options) => new Intl.DateTimeFormat(locale, options).format(date); 
+
+
+const tablaVentas = document.getElementById('tabla-ventas');
+const crearTablaVentas = () => {
+    for (let i=0; i<ventas.length; i++ ) {
+        const crearFilaVentas = document.createElement('tr');
+        tablaVentas.appendChild(crearFilaVentas);
+            for (let z=0; z<ventas[i].length; z++) {
+                crearFilaVentas.innerHTML = `
+                <td>${format(ventas[i][1], 'es')}</td>
+                <td>${ventas[i][2]}</td>
+                <td>${ventas[i][3]}</td> 
+                <td>${ventas[i][4]}</td>
+                <td>Precio Total</td>
+                <td class="iconos-edit"><i class="far fa-edit boton-editar" id="editar-${i}"></i> <i class="far fa-trash-alt boton-eliminar" id="eliminar-${i}"></i></td>` 
+        }
+    }
+}
+crearTablaVentas();
+
+// ------------------------------ Desplegables del form de la modal Nueva Venta ------------------------------
 
 const sumarVendedoras = () => {
     for (let i=0; i < vendedoras.length; i++){
@@ -49,7 +81,7 @@ sumarVendedoras();
 const sumarComponentes = () => {
     for (let i = 0; i < precios.length; i++) {
         const optionComponente = document.createElement('option');
-        optionComponente.setAttribute('id', 'seleccion-componente');
+        //optionComponente.setAttribute('id', 'seleccion-componente');
         listaComponentes.appendChild(optionComponente);
         optionComponente.innerText = `${precios[i][0]}`;
     }
@@ -99,40 +131,85 @@ sumarSucursalesEdit();
 // ------------------------------ Apertura y cierre de ventanas modal ------------------------------
 
 //NUEVA VENTA
+
+const blurContenedor = document.getElementById('contenedor-supremo');
+
 nuevaVenta.addEventListener('click', () => {
     ventanaModalVenta.classList.remove('ocultar-modal');
+    blurContenedor.style.filter = 'blur(5px)'; 
 })
 
-aceptarNuevaVenta.addEventListener('click', () => {
+//Botón aceptar
+aceptarNuevaVenta.addEventListener('click', (e) => {
+    e.preventDefault();
     ventanaModalVenta.classList.add('ocultar-modal');
+    blurContenedor.style.filter = 'none'; 
 })
 
-cancelarNuevaVenta.addEventListener('click', () => {
+//Botón cancelar
+cancelarNuevaVenta.addEventListener('click', (e) => {
+    e.preventDefault();
     ventanaModalVenta.classList.add('ocultar-modal');
+    blurContenedor.style.filter = 'none'; 
 })
+
 
 //EDITAR VENTA
-btnEditar.addEventListener('click', () => {
-    ventanaModalEditar.classList.remove('ocultar-modal');
-})
+const btnEditar = document.querySelectorAll('.boton-editar');
+const editarVentas = () => {
+    for (let i=0; i < btnEditar.length; i++) {
+        btnEditar[i].onclick = () => {
+            let pedacitoID = parseInt(btnEditar[i].id.slice(7)); 
+            ventanaModalEditar.classList.remove('ocultar-modal')
+            blurContenedor.style.filter = 'blur(5px)'; 
+        }
+    }
+}
+editarVentas();
 
-aceptarEditarVenta.addEventListener('click', () => {
+//Botón aceptar
+aceptarEditarVenta.addEventListener('click', (e) => {
+    e.preventDefault();
     ventanaModalEditar.classList.add('ocultar-modal');
+    blurContenedor.style.filter = 'none'; 
 })
 
-cancelarEditarVenta.addEventListener('click', () => {
+//Botón cancelar
+cancelarEditarVenta.addEventListener('click', (e) => {
+    e.preventDefault();
     ventanaModalEditar.classList.add('ocultar-modal');
+    blurContenedor.style.filter = 'none'; 
 })
 
-//ELIMINAR VENTA 
-btnEliminar.addEventListener('click', () => {
-    ventanaModalEliminar.classList.remove('ocultar-modal');
-})
+//Cargar datos form
+const formNuevaVenta = document.getElementById('form-nueva-venta');
+const formEditarVenta = document.getElementById('form-editar-venta');
 
-aceptarEliminarVenta.addEventListener('click', () => {
+const fechaNuevaVenta = document.getElementById('fecha-nueva-venta');
+const fechaEditarVenta = document.getElementById('fecha-editar-venta');
+
+
+// //ELIMINAR VENTA 
+const btnEliminar = document.querySelectorAll('.boton-eliminar');
+const eliminarVentas = () => {
+    for (let i=0; i < btnEliminar.length; i++) {
+        btnEliminar[i].onclick = () => {
+            let pedacitoID = parseInt(btnEliminar[i].id.slice(7)); 
+            ventanaModalEliminar.classList.remove('ocultar-modal');
+            blurContenedor.style.filter = 'blur(5px)'; 
+        }
+    }
+}
+eliminarVentas();
+
+//Botón Eliminar
+ aceptarEliminarVenta.addEventListener('click', () => {
+     ventanaModalEliminar.classList.add('ocultar-modal');
+     blurContenedor.style.filter = 'none'; 
+ })
+
+ //Botón Cancelar
+ cancelarEliminarVenta.addEventListener('click', () => {
     ventanaModalEliminar.classList.add('ocultar-modal');
-})
-
-cancelarEliminarVenta.addEventListener('click', () => {
-    ventanaModalEliminar.classList.add('ocultar-modal');
-})
+    blurContenedor.style.filter = 'none'; 
+ })
