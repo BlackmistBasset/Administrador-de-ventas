@@ -202,7 +202,15 @@ th {
 }
 
 .boton-general:hover {
-    background-color: #0f3d7c;
+    background-color: green;
+}
+
+.neutro:hover {
+   background-color: #0546a1;
+}
+
+.eliminar-venta:hover {
+    background-color: rgb(192, 2, 2);
 }
 
 .ocultar-modal {
@@ -219,6 +227,7 @@ th {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 }
 
 .ventana-modal-nueva-venta, .ventana-modal-editar-venta {
@@ -227,6 +236,7 @@ th {
     background-color: #ebecd8;
     border-radius: 15px;
     border: 2px solid #80d39b;
+    z-index: 1;
 }
 
 .leyenda-select-multiple {
@@ -243,6 +253,7 @@ th {
     background-color: #ebecd8;
     border-radius: 15px;
     border: 2px solid #80d39b;
+    z-index: 1;
 }
 
 .leyenda-alert-eliminar {
@@ -331,4 +342,13 @@ input[type=date] {
 .contenedor-botones {
     display: flex;
     justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.positivo {
+    background-color: rgb(12, 71, 12);
+}
+
+.eliminar-venta {
+    background-color: rgb(126, 2, 2);
 }

@@ -21,7 +21,7 @@
                     <div class="encabezado">
                         <h2 class="titulo-encabezado">Nueva venta</h2>
                     </div>
-                    <form class="form-nueva-venta">
+                    <form class="form-nueva-venta" id="form-nueva-venta">
                         <label>Vendedora</label>
                         <select id="vendedoras" class="single-select">
                             <!--Los valores vienen desde el js-->
@@ -36,12 +36,12 @@
                             <!--Los valores vienen desde el js-->
                         </select>
                         <label>Fecha</label>
-                        <input type="date">
+                        <input type="date" id="fecha-nueva-venta">
+                        <div class="contenedor-botones">
+                            <button class="boton-general neutro" id="nueva-venta-aceptar">Cancelar</button>
+                            <input type="submit" class="boton-general positivo" id="nueva-venta-cancelar" value="Aceptar">
+                        </div>
                     </form>
-                    <div class="contenedor-botones">
-                        <button class="boton-general" id="nueva-venta-aceptar">Aceptar</button>
-                        <button class="boton-general" id="nueva-venta-cancelar">Cancelar</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
             <div class="encabezado">
                 <h2 class="titulo-encabezado">Editar venta</h2>
             </div>
-            <form class="form-editar-venta">
+            <form class="form-editar-venta" id="form-editar-venta">
                 <label>Vendedora</label>
                 <select id="vendedoras-edit" class="single-select">
                     <!--Los valores vienen desde el js-->
@@ -68,12 +68,12 @@
                     <!--Los valores vienen desde el js-->
                 </select>
                 <label>Fecha</label>
-                <input type="date">
+                <input type="date" id="fecha-editar-venta">
+                <div class="contenedor-botones">
+                    <button class="boton-general neutro" id="editar-venta-cancelar">Cancelar</button>
+                    <input type="submit" class="boton-general positivo" id="editar-venta-aceptar" value="Aceptar"> 
+                </div>
             </form>
-            <div class="contenedor-botones">
-                <button class="boton-general" id="editar-venta-aceptar">Aceptar</button>
-                <button class="boton-general" id="editar-venta-cancelar">Cancelar</button>
-            </div>
         </div>
     </div>
 </div>
@@ -88,15 +88,15 @@
                     <h3 class="alert-eliminar">¿Estás segura?</h3>
                     <p class="leyenda-alert-eliminar">Ésta acción no se puede revertir.</p>
                     <div class="contenedor-botones">
-                        <button class="boton-general" id="eliminar-venta-aceptar">Aceptar</button>
-                        <button class="boton-general" id="eliminar-venta-cancelar">Cancelar</button>   
+                        <button class="boton-general neutro" id="eliminar-venta-cancelar">Cancelar</button>   
+                        <button class="boton-general eliminar-venta" id="eliminar-venta-aceptar">Eliminar</button>
                     </div>
         </div>
     </div>
 </div>
 
 <!--'*⚝。•‧-C O N T E N E D O R P R I N C I P A L-‧•。⚝*'-->
-        <div class="contenedor-supremo">
+        <div class="contenedor-supremo" id="contenedor-supremo">
             <div class="contenedor-superior">
 
                 <div class="estadisticas-ventas"> <!--'*⚝。•‧-Ventas por sucursal-‧•。⚝*'-->
@@ -104,19 +104,12 @@
                         <h2 class="titulo-encabezado">Ventas por sucursal</h2>
                     </div>
                     <div class="contenido">
-                        <table class="tabla-estadisticas">
+                        <table class="tabla-estadisticas" id="tabla-estadisticas">
                             <tr>
                                 <th>Sucursal</th>
                                 <th>Ventas</th>
-                            </tr>
-                            <tr>
-                                <td>sucursal1</td>
-                                <td>venta1</td>
-                            </tr>
-                            <tr>
-                                <td>sucursal2</td>
-                                <td>venta2</td>
-                            </tr>
+                            </tr> 
+                                <!--Los valores vienen desde el js-->
                         </table>
                     </div>
                 </div>
@@ -137,10 +130,10 @@
                     <div class="ventas"><!--'*⚝。•‧-Ventas-‧•。⚝*'-->
                         <div class="encabezado">
                             <h2 class="titulo-encabezado">Ventas</h2>
-                            <button class="boton-general" id="nueva-venta">Nueva Venta</button>
+                            <button class="boton-general positivo" id="nueva-venta">Nueva Venta</button>
                         </div>
                         <div class="contenido">
-                        <table>
+                        <table id="tabla-ventas">
                             <tr>
                                 <th class="tabla-fecha">Fecha</th>
                                 <th class="tabla-vendedora">Vendedora</th>
@@ -149,41 +142,12 @@
                                 <th class="tabla-precio">Precio</th>
                                 <th class="tabla-acciones">Acciones</th>
                             </tr>
-                            <tr>
-                                <td>Fila1 Celda1</td>
-                                <td>Fila1 Celda2</td>
-                                <td>Fila1 Celda3</td>
-                                <td>Fila1 Celda4</td>
-                                <td>Fila1 Celda5</td>
-                                <td class="iconos-edit"><i class="far fa-edit boton-editar"></i> <i class="far fa-trash-alt boton-eliminar" ></i></td>
-                            </tr>
-                            <tr>
-                                <td>Fila2 Celda1</td>
-                                <td>Fila2 Celda2</td>
-                                <td>Fila2 Celda3</td>
-                                <td>Fila2 Celda4</td>
-                                <td>Fila2 Celda5</td>
-                                <td class="iconos-edit"><i class="far fa-edit"></i> <i class="far fa-trash-alt"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Fila3 Celda1</td>
-                                <td>Fila3 Celda2</td>
-                                <td>Fila3 Celda3</td>
-                                <td>Fila3 Celda4</td>
-                                <td>Fila3 Celda5</td>
-                                <td class="iconos-edit"><i class="far fa-edit"></i> <i class="far fa-trash-alt"></i></td>
-                            </tr>
                         </table>
                         </div>
                     </div>
             </div>
 
         </div>
-
-
-
-
-
 
         <script src="js/admin.js"></script>
     </body>
