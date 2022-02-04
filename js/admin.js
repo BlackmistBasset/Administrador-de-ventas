@@ -34,6 +34,8 @@ const sucursales = ["Centro", "Caballito"];
 
 // ------------------------------ Creación de tablas ------------------------------
 
+
+//  Tabla de ventas por Sucursal 
 const sucursalesMasVentas = document.getElementById('tabla-estadisticas');
 
 const crearTablaEstdisticas = () => {
@@ -45,29 +47,15 @@ const crearTablaEstdisticas = () => {
 }
 crearTablaEstdisticas();
 
+
+
+// T A B L A  V E N T A S  I N I C I A L 
+
 //Dar formato a la fecha
 const format = (date, locale, options) => new Intl.DateTimeFormat(locale, options).format(date); 
 
-
 const tablaVentas = document.getElementById('tabla-ventas');
-/*const crearTablaVentas = () => {
-    for (let i=0; i<ventas.length; i++ ) {
-        const crearFilaVentas = document.createElement('tr');
-        tablaVentas.appendChild(crearFilaVentas);
-            for (let z=0; z<ventas[i].length; z++) {
-                crearFilaVentas.innerHTML = `
-                <td>${format(ventas[i][1], 'es')}</td>
-                <td>${ventas[i][2]}</td>
-                <td>${ventas[i][3]}</td> 
-                <td>${ventas[i][4]}</td>
-                <td>Precio Total</td>
-                <td class="iconos-edit"><i class="far fa-edit boton-editar" id="editar-${i}"></i> <i class="far fa-trash-alt boton-eliminar" id="eliminar-${i}"></i></td>` 
-        }
-    }
-}
-crearTablaVentas();*/
 
-//Funcion a actualizar
 const cargarVentas = () => {
     ventas.forEach(fila => { 
         let crearFilaVentas = document.createElement('tr');
@@ -85,22 +73,13 @@ const cargarVentas = () => {
         crearFilaVentas.appendChild(celdaPrecio);
         
         let celdaAcciones = document.createElement('td');
-        celdaAcciones.innerHTML = `<i class="far fa-edit boton-editar" id="editar-"></i> <i class="far fa-trash-alt boton-eliminar" id="eliminar-"></i>`
+        celdaAcciones.innerHTML = `<i class="far fa-edit boton-editar" id="editar-${fila[0]}"></i> <i class="far fa-trash-alt boton-eliminar" id="eliminar-${fila[0]}"></i>`
         celdaAcciones.classList.add('iconos-edit');
         crearFilaVentas.appendChild(celdaAcciones);
-  });
+        
+    });
 }
 cargarVentas();
-
-
-
-
-const limpiarTabla = () => {
-tablaEquipos.innerHTML = '';
-cargarVentas();
-}
-
-
 
 // ------------------------------ Desplegables del form de la modal Nueva Venta ------------------------------
 
@@ -116,7 +95,8 @@ sumarVendedoras();
 const sumarComponentes = () => {
     for (let i = 0; i < precios.length; i++) {
         const optionComponente = document.createElement('option');
-        //optionComponente.setAttribute('id', 'seleccion-componente');
+        optionComponente.setAttribute('value', precios[i][0]);
+        optionComponente.classList.add('option-componente')
         listaComponentes.appendChild(optionComponente);
         optionComponente.innerText = `${precios[i][0]}`;
     }
@@ -224,52 +204,66 @@ const fechaNuevaVenta = document.getElementById('fecha-nueva-venta');
 const fechaEditarVenta = document.getElementById('fecha-editar-venta');
 const formEditarVenta = document.getElementById('form-editar-venta');
 
-const idVentas = ventas[0][0];
-console.log(idVentas);
+//const idVentas = ventas[0][0];
+//console.log(idVentas);
 
 
-
+let contadorID = 5;
 aceptarNuevaVenta.addEventListener('click', () => {
     //console.log('perro');
-    const crearFilaVentas = document.createElement('tr');
-    tablaVentas.appendChild(crearFilaVentas);
-    let fechaNuevaVenta1 = fechaNuevaVenta.value;
+    contadorID ++;
+    console.log(contadorID)
+    let fechaNuevaVenta1 = new Date(fechaNuevaVenta.value);
     let vendedoraNuevaVenta = listaVendedoras.value;
     let sucursalNuevaVenta = listaSucursales.value;
-    let componentesNuevaVenta = listaComponentes.value;
-    crearFilaVentas.innerHTML = `
-    <td>${format(new Date(fechaNuevaVenta1), 'es')}</td>
-    <td>${vendedoraNuevaVenta}</td>
-    <td>${sucursalNuevaVenta}</td> 
-    <td>${componentesNuevaVenta}</td>
-    <td>Precio Total</td>
-    <td class="iconos-edit"><i class="far fa-edit boton-editar" id="editar"></i> <i class="far fa-trash-alt boton-eliminar" id="eliminar-"></i></td>` 
-    
-    ventas.push([fechaNuevaVenta1, vendedoraNuevaVenta, sucursalNuevaVenta, [componentesNuevaVenta]]);
-
-    editarVentas();
+    let componentesSeleccionados = [];
+    const listaDeComponentes = document.querySelectorAll('.option-componente');
+    for(element of listaDeComponentes) {
+        if (element.selected) {
+             componentesSeleccionados.push(element.value);
+         }
+        }
+        console.log(componentesSeleccionados)
+    ventas.push([contadorID, fechaNuevaVenta1, vendedoraNuevaVenta, sucursalNuevaVenta, componentesSeleccionados]);
+    console.log(ventas)
+    actualizarTabla();
 })
 
 
-
-// //ELIMINAR VENTA 
-const btnEliminar = document.querySelectorAll('.boton-eliminar');
-const eliminarVentas = () => {
+// A C T U A L I Z A R  T A B L A  
+const actualizarTabla = () => {
+    tablaVentas.innerHTML = '';
+    cargarVentas();
+    const btnEliminar = document.querySelectorAll('.boton-eliminar');
     for (let i=0; i < btnEliminar.length; i++) {
-        btnEliminar[i].onclick = () => {
-            let pedacitoID = parseInt(btnEliminar[i].id.slice(7)); 
+        btnEliminar[i].addEventListener('click', () => {
             ventanaModalEliminar.classList.remove('ocultar-modal');
             blurContenedor.style.filter = 'blur(5px)'; 
-        }
+            let pedacitoID = parseInt(btnEliminar[i].id.slice(9)); 
+            aceptarEliminarVenta.setAttribute("deleteID", pedacitoID); 
+        })
     }
 }
-eliminarVentas();
+actualizarTabla();
 
-//Botón Eliminar
- aceptarEliminarVenta.addEventListener('click', () => {
-     ventanaModalEliminar.classList.add('ocultar-modal');
-     blurContenedor.style.filter = 'none'; 
- })
+
+// ELIMINAR VENTA 
+
+//Botón ELIMINAR de la modal
+aceptarEliminarVenta.addEventListener('click', () => {
+    ventanaModalEliminar.classList.add('ocultar-modal');
+    blurContenedor.style.filter = 'none'; 
+    ventas.forEach((venta, index) => {
+        console.log(venta[0] === parseInt(aceptarEliminarVenta.getAttribute('deleteID')))
+        console.log("id modal: ", parseInt(aceptarEliminarVenta.getAttribute('deleteID')))
+        console.log("id venta: ", venta[0])
+        if (venta[0] === parseInt(aceptarEliminarVenta.getAttribute('deleteID'))) {
+            ventas.splice(index, 1);
+            console.log(ventas)
+            actualizarTabla();
+        }
+    })
+})
 
  //Botón Cancelar
  cancelarEliminarVenta.addEventListener('click', () => {
