@@ -2,6 +2,7 @@
 <html lang="es">
     <!--' * ⚝ 。• ‧ -I N I C I O  H E A D- ‧ • 。⚝ * '-->
     <head>
+
         <title>Administrador de Ventas</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
         <link href="css/admin.css" rel="stylesheet">
 <!--' * ⚝ 。• ‧ -ICONOS- ‧ • 。⚝ * '-->
         <script src="https://kit.fontawesome.com/a583c7a465.js" crossorigin="anonymous"></script>
+
     </head>
 
 <!--' * ⚝ 。• ‧ -I N I C I O  B O D Y- ‧ • 。⚝ * '-->
@@ -16,7 +18,7 @@
         <script src="js/data.js"></script>
 
 <!--'*⚝。•‧-VENTANA MODAL NUEVA VENTA-‧•。⚝*'-->
-        <div class="ocultar-modal" id="ocultar-modal-nueva-venta">
+        <div class="ocultar-modal" id="background-modal-venta">
             <div class="contenedor-modal-nueva-venta">
                 <div class="ventana-modal-nueva-venta">
                     <div class="encabezado">
@@ -48,7 +50,7 @@
         </div>
 
 <!--'*⚝。•‧-VENTANA MODAL EDITAR VENTA-‧•。⚝*'-->
-<div class="ocultar-modal" id="ocultar-modal-editar-venta">
+<div class="ocultar-modal" id="background-modal-editar">
     <div class="contenedor-modal-editar-venta">
         <div class="ventana-modal-editar-venta">
             <div class="encabezado">
@@ -80,7 +82,7 @@
 </div>
 
 <!--'*⚝。•‧-VENTANA MODAL ELIMINAR VENTA-‧•。⚝*'-->
-<div class="ocultar-modal" id="ocultar-modal-eliminar-venta">
+<div class="ocultar-modal" id="background-modal-eliminar">
     <div class="contenedor-modal-eliminar-venta">
         <div class="ventana-modal-eliminar-venta">
             <div class="encabezado">
@@ -120,8 +122,8 @@
                         <h2 class="titulo-encabezado">Reportes</h2>
                     </div>
                     <div class="contenido">
-                        <p class="enunciado-fijo">Producto estrella: <span id="resultado-prod-estrella">adskhjgasdjhgad</span></p>
-                        <p class="enunciado-fijo">Vendedora que más ingresos generó: <span id="resultado-mas-ventas">aksdhgasdkajhgsd</span></p>
+                        <p class="enunciado-fijo">Producto estrella: <span id="producto-estrella">adskhjgasdjhgad</span></p>
+                        <p class="enunciado-fijo">Vendedora que más ingresos generó: <span id="mejor-vendedora">aksdhgasdkajhgsd</span></p>
                     </div>
                 </div>
             </div>
@@ -152,7 +154,8 @@
             </div>
 
         </div>
-
         <script src="js/functions.js"></script>
+        <script src="js/tablas.js"></script>
+        <script src="js/modals.js"></script>
     </body>
 </html>
