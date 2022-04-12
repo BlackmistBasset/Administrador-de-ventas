@@ -121,7 +121,7 @@ const ventasMes = (mes, año) => {
     return montoVentas
 }
 
-// console.log(ventasMes(1, 2019)); 
+ // console.log(ventasMes(2, 2019)); 
 
 // 5) ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha
 
@@ -134,7 +134,23 @@ const ventasVendedora = (nombre) => {
     return contadorDeVentas
 }
 
-// console.log(ventasVendedora('Sheryl'))
+console.log(ventasVendedora('Grace'))
+
+
+// Función Auxiliar para el render final
+const vendedoraQueMasVendio = () => {
+    let mayorVenta = 0
+    let vendedoraGanadora = ''
+    vendedoras.forEach( vendedora => {
+       if(ventasVendedora(vendedora) > mayorVenta) {
+           mayorVenta = ventasVendedora(vendedora)
+           vendedoraGanadora = vendedora
+       }
+    })
+    return vendedoraGanadora
+}
+
+console.log(vendedoraQueMasVendio())
 
 // 6) componenteMasVendido(): Devuelve el nombre del componente que más ventas tuvo historicamente. El dato de la cantidad de ventas es el que indica la función cantidadVentasComponente
 
@@ -163,7 +179,6 @@ const huboVentas = (mes, anio) => ventasPorFecha(mes, anio).length >= 1  // vent
 const ventasSucursal = (sucursal) => {
     let contadorDeVentas = 0
     let ventasDeEstaSucursal = ventas.filter( venta => venta.sucursal === sucursal ) // Filtro las ventas por sucursal
-    console.log(ventasDeEstaSucursal)
     ventasDeEstaSucursal.forEach( venta => contadorDeVentas += precioMaquina(venta.componentes) ) // Calculo el precio de la venta y lo sumo a contadorDeVentas
 
     return contadorDeVentas
@@ -201,34 +216,58 @@ const sucursalDelMes = (mes, año) => {  // Retorna qué sucursal hizo más vent
 console.log('Resultado Enero:', sucursalDelMes(1, 2019))
 console.log('resultado Febrero:', sucursalDelMes(2, 2019))
 
-// 10) renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año
+
+// 10 ordenarVentasPorFecha(): función auxiliar que me ordena el array de ventas por fecha
+const ordenarVentasPorFecha = () => {
+    return ventas.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
+}
+
+// console.log(ordenarVentasPorFecha())
+
+// 11) renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año
 
 const renderPorMes = () => {
-    const ventasCopia = Array.from(ventas)
-    console.log(ventas)
-    let ventasConMes = ventasCopia.map(sarasa => { // Modifico las fechas de las  ventas para poder crear el objeto
-       // sarasa.fecha = 'cambiame solo en la copia aaaa'
-        //venta.fecha = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(fecha);
-        return sarasa
+    
+    let dateArray = [] 
+    ordenarVentasPorFecha().forEach(({ fecha }) => { // Separo cada fecha para convertirla en propiedad de mi objeto
+        if (!dateArray.includes(fecha.toLocaleDateString('es-ES', {month: 'long', year: 'numeric'}))) {
+            dateArray.push(fecha.toLocaleDateString('es-ES', {month: 'long', year: 'numeric'})) // Le doy formato
+        }
     })
-console.log('copia del array', ventasConMes)
-console.log('log de local.ventas', local.ventas)
-    
-    // let arrayDeFechas = [] 
-    // ventasConMes.forEach(({fecha }) => { // Separo cada fecha para convertirla en propiedad de mi objeto
-    //     if (!arrayDeFechas.includes(fecha)) {
-    //         arrayDeFechas.push(fecha)
-    //     }
-    // })
 
-    // let listaPorMes = {}
-    // arrayDeFechas.forEach( fecha => { // Asigno en mi objeto las distintas fechas como propiedades
-    //     listaPorMes[fecha] = 0
-    // })
-    
-    // console.log(local.ventas)
-    // return listaPorMes
+    let renderMes = {}
+    dateArray.forEach( date => { // Asigno en mi objeto las distintas fechas como propiedades
+        renderMes[date] = 0
+        const dateParse = new Date(date) 
+        renderMes[date] = ventasMes(dateParse.getMonth()+1, dateParse.getFullYear())
+    })
+
+    return renderMes
 }
 
 console.log(renderPorMes())
 
+// 12) renderPorSucursal(): Muestra una lista del importe total vendido por cada sucursal
+
+const renderPorSucursal = () => {
+    let renderSucursal = {}
+    sucursales.forEach(sucursal => {
+        renderSucursal[sucursal] = ventasSucursal(sucursal)
+    })
+    return renderSucursal
+}
+
+console.log(renderPorSucursal())
+
+// 13) render(): muestra la unión de los dos reportes anteriores, cual fue el producto más vendido y la vendedora que más ingresos generó
+
+const render = () => {
+    return {
+        'Reporte de ventas por mes:': renderPorMes(),
+        'Ventas por sucursal:': renderPorSucursal(),
+        'Producto estrella:': componenteMasVendido(),
+        'Vendedora que más ingresos generó': vendedoraQueMasVendio(),
+    }
+}
+
+console.log(render())
