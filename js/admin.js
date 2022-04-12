@@ -221,6 +221,7 @@ aceptarNuevaVenta.addEventListener('click', () => {
     for(element of listaDeComponentes) {
         if (element.selected) {
              componentesSeleccionados.push(element.value);
+             console.log('Elemento seleccionado:', element.value)
          }
         }
         console.log(componentesSeleccionados)
