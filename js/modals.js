@@ -1,6 +1,16 @@
 // ------------------------------ E L E M E N T O S G E N E R A L E S ------------------------------
 const contenedorSupremo = document.getElementById('contenedor-supremo') // Contenedor de toda la aplicación
 
+const actualizarTabla = () => {
+    tablaVentas.innerHTML = ''
+    sucursalesMasVentas.innerHTML = ''
+    crearTablaEstdisticas() // Ventas por sucursal
+    estadisticasVentas() // Producto estrella y vendedora con mas ventas
+    cargarVentas() // Ventas de la tabla principal
+    btnEliminarVenta() // Genera los id en los botones de eliminar
+    btnEditarVentas() // Genera los id en los botones de editar
+}
+
 // ------------------------------ Datos de las modales ---------------------------------------------
 
 // Vendedoras
@@ -96,25 +106,44 @@ cancelarNuevaVenta.addEventListener('click', (e) => {
 //EDITAR VENTA
 const ventanaModalEditar = document.getElementById('background-modal-editar') // Fondo de la ventana modal
 const btnEditar = document.querySelectorAll('.boton-editar'); // Todos los íconos "edit"
+const aceptarEditarVenta = document.getElementById('editar-venta-aceptar') // Botón Aceptar
 
-const editarVentas = () => {
-    for (let i=0; i < btnEditar.length; i++) {
-        btnEditar[i].onclick = () => {
-            let pedacitoID = parseInt(btnEditar[i].id.slice(7)); 
-            console.log(pedacitoID)
+const btnEditarVentas = () => {
+    btnEditar.forEach ( button => {
+        button.onclick = () => {
             ventanaModalEditar.classList.remove('ocultar-modal')
             contenedorSupremo.style.filter = 'blur(5px)'; 
+            let getID = parseInt(button.id.slice(7)); 
+            aceptarEditarVenta.setAttribute('editID', getID)
         }
-    }
+    })
 }
+btnEditarVentas()
 
 //Aceptar editar venta
-const aceptarEditarVenta = document.getElementById('editar-venta-aceptar') // Botón Aceptar
+const fechaEditarVenta = document.getElementById('fecha-editar-venta');
+//const formEditarVenta = document.getElementById('form-editar-venta');
+
 
 aceptarEditarVenta.addEventListener('click', (e) => {
     e.preventDefault();
     ventanaModalEditar.classList.add('ocultar-modal');
     contenedorSupremo.style.filter = 'none'; 
+    ventas.forEach((venta, index) => {
+        if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
+            let componentesSeleccionados = []
+            const listaDeComponentes = document.querySelectorAll('.option-componente')
+            listaDeComponentes.forEach ( componente => 
+            componente.selected && componentesSeleccionados.push(componente.value))
+
+            venta.fecha = new Date(fechaEditarVenta.value)
+            venta.nombreVendedora = listaVendedorasEdit.value
+            venta.componentes = componentesSeleccionados
+            venta.sucursal = listaSucursalesEdit.value
+
+            actualizarTabla()
+        }
+    })
 })
 
 //Cancelar editar venta
@@ -129,45 +158,46 @@ cancelarEditarVenta.addEventListener('click', (e) => {
 
 // ELIMINAR VENTA 
 
-const btnEliminar = document.querySelectorAll('.boton-eliminar'); // Todos los íconos "delete"
 const ventanaModalEliminar = document.getElementById('background-modal-eliminar') // Fondo de la ventana modal
 
-const eliminarVenta = () => {
-    for (let i=0; i < btnEliminar.length; i++) {
-        btnEliminar[i].addEventListener('click', () => {
-            ventanaModalEliminar.classList.remove('ocultar-modal');
-            blurContenedor.style.filter = 'blur(5px)'; 
-            let pedacitoID = parseInt(btnEliminar[i].id.slice(9)); 
-            aceptarEliminarVenta.setAttribute("deleteID", pedacitoID); 
+const aceptarEliminarVenta = document.getElementById('eliminar-venta-aceptar') // Botón aceptar
+const cancelarEliminarVenta = document.getElementById('eliminar-venta-cancelar') // Botón cancelar
+
+
+const btnEliminarVenta = () => {
+    const btnEliminar = document.querySelectorAll('.boton-eliminar'); // Todos los íconos "delete"
+    btnEliminar.forEach (button => {
+        button.addEventListener('click', () => { //el evento que se ejecuta cuando se toca un icono
+            ventanaModalEliminar.classList.remove('ocultar-modal')
+            contenedorSupremo.style.filter = 'blur(5px)'
+            let getID = parseInt(button.id.slice(9))
+            aceptarEliminarVenta.setAttribute("deleteID", getID) //Se asigna el id de este icono al boton aceptar de la modal
         })
-    } 
-    actualizarTabla()
+    })
 }
 
-//Eliminar venta
-const aceptarEliminarVenta = document.getElementById('eliminar-venta-aceptar') // Botón aceptar
+btnEliminarVenta() 
 
-aceptarEliminarVenta.addEventListener('click', () => {
-    ventanaModalEliminar.classList.add('ocultar-modal');
-    blurContenedor.style.filter = 'none'; 
+//Eliminar venta
+
+const confirmarEliminar = () => { //funcion que se ejecuta al aceptar eliminar una venta
+    ventanaModalEliminar.classList.add('ocultar-modal')
+    contenedorSupremo.style.filter = 'none'
     ventas.forEach((venta, index) => {
-        console.log(venta[0] === parseInt(aceptarEliminarVenta.getAttribute('deleteID')))
-        console.log("id modal: ", parseInt(aceptarEliminarVenta.getAttribute('deleteID')))
-        console.log("id venta: ", venta[0])
-        if (venta[0] === parseInt(aceptarEliminarVenta.getAttribute('deleteID'))) {
-            ventas.splice(index, 1);
-            console.log(ventas)
-            actualizarTabla();
+        if (index === parseInt(aceptarEliminarVenta.getAttribute('deleteID'))) {
+            ventas.splice(index, 1)
+            actualizarTabla()
         }
     })
-})
+}
+
+aceptarEliminarVenta.addEventListener('click', confirmarEliminar)
 
 //Cancelar eliminar venta
-const cancelarEliminarVenta = document.getElementById('eliminar-venta-cancelar') // Botón cancelar
 
 cancelarEliminarVenta.addEventListener('click', () => {
     ventanaModalEliminar.classList.add('ocultar-modal');
-    blurContenedor.style.filter = 'none'; 
+    contenedorSupremo.style.filter = 'none'; 
  })
  
  

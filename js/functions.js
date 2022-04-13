@@ -90,7 +90,7 @@ const ventasVendedora = (nombre) => {
     return contadorDeVentas
 }
 
-console.log(ventasVendedora('Grace'))
+//console.log(ventasVendedora('Grace'))
 
 
 // Función Auxiliar para el render final
