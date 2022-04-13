@@ -105,10 +105,10 @@ cancelarNuevaVenta.addEventListener('click', (e) => {
 
 //EDITAR VENTA
 const ventanaModalEditar = document.getElementById('background-modal-editar') // Fondo de la ventana modal
-const btnEditar = document.querySelectorAll('.boton-editar'); // Todos los íconos "edit"
 const aceptarEditarVenta = document.getElementById('editar-venta-aceptar') // Botón Aceptar
 
 const btnEditarVentas = () => {
+    const btnEditar = document.querySelectorAll('.boton-editar'); // Todos los íconos "edit"
     btnEditar.forEach ( button => {
         button.onclick = () => {
             ventanaModalEditar.classList.remove('ocultar-modal')
