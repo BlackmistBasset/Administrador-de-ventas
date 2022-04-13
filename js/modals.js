@@ -106,36 +106,60 @@ cancelarNuevaVenta.addEventListener('click', (e) => {
 //EDITAR VENTA
 const ventanaModalEditar = document.getElementById('background-modal-editar') // Fondo de la ventana modal
 const aceptarEditarVenta = document.getElementById('editar-venta-aceptar') // Botón Aceptar
+let fechaEditarVenta = document.getElementById('fecha-editar-venta')
+
+const setearModal = () => {
+
+    let componentesSeleccionados = []
+    const listaDeComponentes = document.querySelectorAll('.option-componente')
+    listaDeComponentes.forEach ( componente => 
+    componente.selected && componentesSeleccionados.push(componente.value))
+
+    ventas.forEach((venta, index) => {
+        console.log('setear Modal!')
+        if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
+            console.log(venta.fecha.toLocaleDateString('en-CA', {year: 'numeric', month: 'numeric', day: 'numeric' }))
+            console.log(fechaEditarVenta)
+            fechaEditarVenta.value = venta.fecha.toLocaleDateString('en-CA', {day: 'numeric', month: 'numeric', year: 'numeric'})
+            console.log(fechaEditarVenta)
+            listaVendedorasEdit.value = venta.nombreVendedora
+            componentesSeleccionados = venta.componentes
+            listaSucursalesEdit.value = venta.sucursal
+        }
+    })
+}
 
 const btnEditarVentas = () => {
     const btnEditar = document.querySelectorAll('.boton-editar'); // Todos los íconos "edit"
     btnEditar.forEach ( button => {
-        button.onclick = () => {
+        button.addEventListener('click', () => {
             ventanaModalEditar.classList.remove('ocultar-modal')
             contenedorSupremo.style.filter = 'blur(5px)'; 
             let getID = parseInt(button.id.slice(7)); 
             aceptarEditarVenta.setAttribute('editID', getID)
-        }
+            setearModal()
+        })
     })
 }
 btnEditarVentas()
 
 //Aceptar editar venta
-const fechaEditarVenta = document.getElementById('fecha-editar-venta');
 //const formEditarVenta = document.getElementById('form-editar-venta');
 
 
 aceptarEditarVenta.addEventListener('click', (e) => {
     e.preventDefault();
-    ventanaModalEditar.classList.add('ocultar-modal');
-    contenedorSupremo.style.filter = 'none'; 
-    ventas.forEach((venta, index) => {
-        if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
-            let componentesSeleccionados = []
-            const listaDeComponentes = document.querySelectorAll('.option-componente')
-            listaDeComponentes.forEach ( componente => 
-            componente.selected && componentesSeleccionados.push(componente.value))
+    ventanaModalEditar.classList.add('ocultar-modal')
+    contenedorSupremo.style.filter = 'none'
 
+    let componentesSeleccionados = []
+    const listaDeComponentes = document.querySelectorAll('.option-componente')
+    listaDeComponentes.forEach ( componente => 
+    componente.selected && componentesSeleccionados.push(componente.value))
+    
+    ventas.forEach((venta, index) => {
+
+        if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
             venta.fecha = new Date(fechaEditarVenta.value)
             venta.nombreVendedora = listaVendedorasEdit.value
             venta.componentes = componentesSeleccionados
@@ -145,6 +169,7 @@ aceptarEditarVenta.addEventListener('click', (e) => {
         }
     })
 })
+
 
 //Cancelar editar venta
 const cancelarEditarVenta = document.getElementById('editar-venta-cancelar') // Botón Cancelar
