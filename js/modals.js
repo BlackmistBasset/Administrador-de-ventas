@@ -9,6 +9,7 @@ const actualizarTabla = () => {
     cargarVentas() // Ventas de la tabla principal
     btnEliminarVenta() // Genera los id en los botones de eliminar
     btnEditarVentas() // Genera los id en los botones de editar
+    setearModal()
 }
 
 // ------------------------------ Datos de las modales ---------------------------------------------
@@ -46,7 +47,7 @@ const cargarComponentes = () => {
         
         const optionComponenteEdit = document.createElement('option');
         optionComponenteEdit.setAttribute('value', componente);
-        optionComponenteEdit.classList.add('option-componente')
+        optionComponenteEdit.classList.add('option-componente-edit')
         optionComponenteEdit.innerText = `${componente}`;
         listaComponentesEdit.appendChild(optionComponenteEdit);
     })
@@ -111,20 +112,24 @@ let fechaEditarVenta = document.getElementById('fecha-editar-venta')
 const setearModal = () => {
 
     let componentesSeleccionados = []
-    const listaDeComponentes = document.querySelectorAll('.option-componente')
+    const listaDeComponentes = document.querySelectorAll('.option-componente-edit')
     listaDeComponentes.forEach ( componente => 
     componente.selected && componentesSeleccionados.push(componente.value))
 
     ventas.forEach((venta, index) => {
-        console.log('setear Modal!')
         if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
-            console.log(venta.fecha.toLocaleDateString('en-CA', {year: 'numeric', month: 'numeric', day: 'numeric' }))
-            console.log(fechaEditarVenta)
             fechaEditarVenta.value = venta.fecha.toLocaleDateString('en-CA', {day: 'numeric', month: 'numeric', year: 'numeric'})
-            console.log(fechaEditarVenta)
             listaVendedorasEdit.value = venta.nombreVendedora
-            componentesSeleccionados = venta.componentes
             listaSucursalesEdit.value = venta.sucursal
+            console.log(venta.componentes)
+            venta.componentes.forEach(componente => {
+                listaDeComponentes.forEach ( componenteSelect => {
+                    if (componente === componenteSelect.value) {
+                        componenteSelect.setAttribute('selected', '')
+                        console.log(componenteSelect)
+                    }
+                })
+            })
         }
     })
 }
@@ -144,8 +149,6 @@ const btnEditarVentas = () => {
 btnEditarVentas()
 
 //Aceptar editar venta
-//const formEditarVenta = document.getElementById('form-editar-venta');
-
 
 aceptarEditarVenta.addEventListener('click', (e) => {
     e.preventDefault();
