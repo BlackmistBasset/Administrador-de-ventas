@@ -161,7 +161,7 @@ const sucursalDelMes = (mes, año) => {
     let ventasAFiltrar = ventasPorFecha(mes, año)  
 
     ventasAFiltrar.forEach( venta => {  
-       for (propSucursal in cuantoVendioCadaSucursal) {  
+       for (const propSucursal in cuantoVendioCadaSucursal) {  
             if( venta.sucursal === propSucursal ) {
                 cuantoVendioCadaSucursal[propSucursal] += precioMaquina(venta.componentes)
             }

@@ -14,6 +14,13 @@ const actualizarTabla = () => {
     unSetModal() // Quita los atributos "selected" de los componentes 
 }
 
+//------------------------------- CORREGIR FECHAs ------------------------------------
+
+const corregirFecha = (fecha, dias) => {
+    fecha.setDate(fecha.getDate() + dias);
+    return fecha;
+  }
+
 
 //----------------------------- N U E V A    V E N T A ----------------------------------
 
@@ -27,7 +34,7 @@ const agregarVenta = () => { // Esta función se ejecuta al apretar el botón "a
         componente.selected && componentesSeleccionados.push(componente.value))
 
     let nuevaVenta = {
-        fecha: new Date(fechaNuevaVenta.value),
+        fecha: corregirFecha(new Date(fechaNuevaVenta.value), 1),
         nombreVendedora: listaVendedoras.value,
         componentes: componentesSeleccionados,
         sucursal: listaSucursales.value
@@ -116,7 +123,7 @@ aceptarEditarVenta.addEventListener('click', (e) => {
     ventas.forEach((venta, index) => {
 
         if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
-            venta.fecha = new Date(fechaEditarVenta.value)
+            venta.fecha = corregirFecha(new Date(fechaEditarVenta.value), 1)
             venta.nombreVendedora = listaVendedorasEdit.value
             venta.componentes = componentesSeleccionados
             venta.sucursal = listaSucursalesEdit.value
@@ -140,14 +147,11 @@ cancelarEditarVenta.addEventListener('click', (e) => {
 
 
 //----------------------------- E L I M I N A R  V E N T A ------------------------------
-const aceptarEliminarVenta = document.getElementById('eliminar-venta-aceptar') // Botón aceptar
-const cancelarEliminarVenta = document.getElementById('eliminar-venta-cancelar') // Botón cancelar
-
 
 const btnEliminarVenta = () => { // Ésta función asigna el id dinámico al boton de aceptar eliminar
     const btnEliminar = document.querySelectorAll('.boton-eliminar'); // Todos los íconos "delete"
     btnEliminar.forEach (button => {
-        button.addEventListener('click', () => { //el evento que se ejecuta cuando se toca un icono
+        button.addEventListener('click', () => { 
             let getID = parseInt(button.id.slice(9))
             aceptarEliminarVenta.setAttribute("deleteID", getID) 
         })
@@ -158,6 +162,7 @@ btnEliminarVenta()
 
 
 //Eliminar venta
+const aceptarEliminarVenta = document.getElementById('eliminar-venta-aceptar') // Botón aceptar
 
 const confirmarEliminar = () => { //funcion que se ejecuta al aceptar eliminar una venta
     const { ventas } = local
@@ -175,6 +180,7 @@ aceptarEliminarVenta.addEventListener('click', confirmarEliminar)
 
 
 //Cancelar eliminar venta
+const cancelarEliminarVenta = document.getElementById('eliminar-venta-cancelar') // Botón cancelar
 
 cancelarEliminarVenta.addEventListener('click', () => {
     ventanaModalEliminar.classList.add('ocultar-modal');
