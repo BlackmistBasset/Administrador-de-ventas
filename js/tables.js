@@ -1,6 +1,6 @@
 // ------------------------------ Creación de tablas ------------------------------
 
-//  Tabla de ventas por Sucursal --------------------------------------------------
+// ------------------------------ Ventas por sucursal -----------------------------
 const sucursalesMasVentas = document.getElementById('tabla-estadisticas')
 
 const crearTablaEstdisticas = () => {
@@ -11,9 +11,10 @@ const crearTablaEstdisticas = () => {
         sucursalesMasVentas.appendChild(ventasEnSucursal);
     })
 }
-crearTablaEstdisticas();
+crearTablaEstdisticas()
 
-// Tabla principal de ventas -------------------------------------------------------
+
+// ------------------------------ Tabla de ventas --------------------------------
 
 const tablaVentas = document.getElementById('tabla-ventas') // T-body de mi tabla "ventas"
 
@@ -34,11 +35,12 @@ const cargarVentas = () => {
             </td>
         `
         tablaVentas.appendChild(itemVenta)        
-    });
+    })
 }
 cargarVentas();
 
-// Producto estrella y vendedora con más ventas
+
+// ---------------- Producto estrella y vendedora con más ventas ------------------
 
 const productoEstrella = document.getElementById('producto-estrella')
 const mejorVendedora = document.getElementById('mejor-vendedora')

@@ -312,10 +312,10 @@ label {
     overflow: auto;
     outline: none;
 }
-
-select[multiple]:focus option:checked {
+ 
+ select[multiple]:focus option:checked {
     background: #816f5c linear-gradient(0deg, #816f5c 0%, #816f5c);
-  }
+  }  
 
 option {
     height: 30px;
@@ -323,7 +323,7 @@ option {
     font-size: 17px;
     padding-top: 2px;
     font-family: 'Patrick Hand', cursive;
-    background-color: #fefff5;
+    /* background-color: #fefff5; */
     
 }
 
