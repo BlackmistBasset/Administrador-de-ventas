@@ -132,7 +132,7 @@ span {
 }
 
 .ventas .contenido {
-    height: 18.75em;
+    height: 19.2em;
 }
 
 /* - - - - - - - - - - -' * ⚝ 。• ‧ -TABLAS- ‧ • 。⚝ * '- - - - - - - - - - - */
@@ -140,6 +140,7 @@ span {
 table {
     width: 95%;
     margin: auto;
+    margin-bottom: 5px;
     border-collapse: collapse;
     color: #0f3d7c;
 }
