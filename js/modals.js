@@ -79,7 +79,6 @@ nuevaVenta.addEventListener('click', () => { // Éste evento abre la modal "nuev
 
 //EDITAR VENTA
 const ventanaModalEditar = document.getElementById('background-modal-editar') // Fondo de la ventana modal
-const aceptarEditarVenta = document.getElementById('editar-venta-aceptar') // Botón Aceptar
 
 const editarVenta = () => {
     const btnEditar = document.querySelectorAll('.boton-editar'); // Todos los íconos "edit"

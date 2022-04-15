@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap'); /* font-family: 'Neucha', cursive; */
 
 
-*, *::before, *::after {
+* {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
@@ -16,8 +16,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    /* width: 100vw;
+    height: 100vh; */
 }
 
 /* - - - - - - - - - - -' * ⚝ 。• ‧ -CONTENEDORES PRINCIPALES- ‧ • 。⚝ * '- - - - - - - - - - - */
@@ -34,6 +34,7 @@ body {
 }
 
 .contenedor-superior {
+    margin-top: 4em;
     width: 100%;
     max-width:68.75em;
     height: 15.625em;
@@ -78,11 +79,11 @@ body {
 .ventas {
     background-color: #ebecd8;
     width: 100%;
-    height: 90%;
     border: 2px solid #80d39b;
     border-radius: 0.938em;
     margin: 0.625em; 
     justify-content: space-between;
+    padding-bottom: 0.938em;
 }
 
 
@@ -140,7 +141,7 @@ span {
 table {
     width: 95%;
     margin: auto;
-    margin-bottom: 5px;
+    margin-bottom: 0.313em;
     border-collapse: collapse;
     color: #0f3d7c;
 }
@@ -369,7 +370,7 @@ input[type=date] {
 
     .contenedor-superior{
         flex-direction: column;
-        margin-top: 300px;
+        margin-top: 18em;
 
     }
 
@@ -378,7 +379,7 @@ input[type=date] {
     }
 
     .ventas {
-        margin-top: 75px;
+        margin-top: 4.7em;
         height: auto;
     }
 
@@ -391,12 +392,12 @@ input[type=date] {
     }
 
     .estadisticas-reportes .contenido {
-        margin-bottom: 10px;
+        margin-bottom: 0.625em;
     }
 
     .contenedor-modal-nueva-venta, .contenedor-modal-editar-venta, .contenedor-modal-eliminar-venta {
         width: 100%;
-        height: 1200px;
+        height: 75em;
         position: fixed;
     }
 }
@@ -404,11 +405,11 @@ input[type=date] {
 
 @media (max-width: 850px) {
     .tabla-componentes {
-        min-width: 160px;
+        min-width: 10em;
     }
 
     .tabla-sucursal {
-        min-width: 90px;
+        min-width: 5.625em
     }
 
     .estadisticas-reportes, .estadisticas-ventas, .ventas {
@@ -419,19 +420,19 @@ input[type=date] {
 
 @media (max-width: 650px) {
     .tabla-fecha {
-        min-width: 87px;
+        min-width: 5.437em;
     }
 
     .tabla-vendedora {
-        min-width: 95px;
+        min-width: 5.938em;
     }
 
     .tabla-acciones {
-        min-width: 90px;
+        min-width: 5.625em;
     }
 
     .tabla-precio {
-        min-width: 80px;
+        min-width: 5em;
     }
 
     .estadisticas-reportes, .estadisticas-ventas, .ventas {
@@ -440,8 +441,7 @@ input[type=date] {
 
     .contenedor-modal-nueva-venta, .contenedor-modal-editar-venta, .contenedor-modal-eliminar-venta {
         width: 100%;
-        height: 1000px;
+        height: 60em;
         position: fixed;
     }
-
 }

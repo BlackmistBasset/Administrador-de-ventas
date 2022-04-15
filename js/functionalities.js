@@ -32,10 +32,10 @@ const agregarVenta = () => { // Esta función se ejecuta al apretar el botón "a
     const listaDeComponentes = document.querySelectorAll('.option-componente')
     listaDeComponentes.forEach ( componente => 
         componente.selected && componentesSeleccionados.push(componente.value))
-
         
-    if (componentesSeleccionados == '') {
-        console.log('agregá componentes!')
+    if (componentesSeleccionados == '' || corregirFecha(new Date(fechaNuevaVenta.value), 1) > new Date() || fechaNuevaVenta.value === '') {
+        alert('Por favor no omitas ningún campo. Asegurate de elegir una fecha válida')
+        ventanaModalVenta.classList.remove('ocultar-modal')
     } else {
         let nuevaVenta = {
             fecha: corregirFecha(new Date(fechaNuevaVenta.value), 1),
@@ -44,7 +44,7 @@ const agregarVenta = () => { // Esta función se ejecuta al apretar el botón "a
             sucursal: listaSucursales.value
         }
         ventas.push(nuevaVenta)
-        actualizarTabla();
+        actualizarTabla()
     }
 }
 
@@ -54,6 +54,7 @@ const aceptarNuevaVenta = document.getElementById('nueva-venta-aceptar')
 
 aceptarNuevaVenta.addEventListener('click', (e) => {
     e.preventDefault();
+    console.log('se ejecutó el evento del boton aceptar')
     ventanaModalVenta.classList.add('ocultar-modal')
     contenedorSupremo.style.filter = 'none'
     agregarVenta()
@@ -96,8 +97,9 @@ const setModal = () => { // Setea por defecto los componentes de la venta a edit
     })
 }
 
-const unSetModal = () => listaDeComponentes.forEach( componente => 
-    componente.removeAttribute('selected', '') )
+const unSetModal = () => listaDeComponentes.forEach( componente => {
+    componente.removeAttribute('selected', '') 
+})
 
 //EDITAR VENTA
 
@@ -114,6 +116,7 @@ const btnEditarVenta = () => {
 btnEditarVenta()
 
 //Aceptar editar venta
+const aceptarEditarVenta = document.getElementById('editar-venta-aceptar') // Botón Aceptar
 
 aceptarEditarVenta.addEventListener('click', (e) => {
     e.preventDefault();
@@ -127,13 +130,18 @@ aceptarEditarVenta.addEventListener('click', (e) => {
     ventas.forEach((venta, index) => {
 
         if (index === parseInt(aceptarEditarVenta.getAttribute('editID'))) {
-            venta.fecha = corregirFecha(new Date(fechaEditarVenta.value), 1)
-            venta.nombreVendedora = listaVendedorasEdit.value
-            venta.componentes = componentesSeleccionados
-            venta.sucursal = listaSucursalesEdit.value
+            if (corregirFecha(new Date(fechaEditarVenta.value), 1) > new Date()){
+                alert('Por favor seleccioná una fecha válida')
+                ventanaModalEditar.classList.remove('ocultar-modal');
+            } else {
+                venta.fecha = corregirFecha(new Date(fechaEditarVenta.value), 1)
+                venta.nombreVendedora = listaVendedorasEdit.value
+                venta.componentes = componentesSeleccionados
+                venta.sucursal = listaSucursalesEdit.value
 
-            actualizarTabla()
-            unSetModal()
+                actualizarTabla()
+                unSetModal()
+            }
         }
     })
 })
