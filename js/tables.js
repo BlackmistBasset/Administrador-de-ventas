@@ -37,7 +37,7 @@ const cargarVentas = () => {
         tablaVentas.appendChild(itemVenta)        
     })
 }
-cargarVentas();
+cargarVentas()
 
 
 // ---------------- Producto estrella y vendedora con más ventas ------------------

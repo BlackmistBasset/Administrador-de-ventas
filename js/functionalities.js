@@ -33,15 +33,19 @@ const agregarVenta = () => { // Esta función se ejecuta al apretar el botón "a
     listaDeComponentes.forEach ( componente => 
         componente.selected && componentesSeleccionados.push(componente.value))
 
-    let nuevaVenta = {
-        fecha: corregirFecha(new Date(fechaNuevaVenta.value), 1),
-        nombreVendedora: listaVendedoras.value,
-        componentes: componentesSeleccionados,
-        sucursal: listaSucursales.value
+        
+    if (componentesSeleccionados == '') {
+        console.log('agregá componentes!')
+    } else {
+        let nuevaVenta = {
+            fecha: corregirFecha(new Date(fechaNuevaVenta.value), 1),
+            nombreVendedora: listaVendedoras.value,
+            componentes: componentesSeleccionados,
+            sucursal: listaSucursales.value
+        }
+        ventas.push(nuevaVenta)
+        actualizarTabla();
     }
-    
-    ventas.push(nuevaVenta)
-    actualizarTabla();
 }
 
 
